@@ -10,6 +10,10 @@ function TodoItem({ todo, toggleDone, deleteTodo, addNewComment }) {
             <button onClick={() => { toggleDone(todo.id) }}>Toggle</button>
             <button onClick={() => { deleteTodo(todo.id) }}>X</button>
 
+            {(!todo.comments || todo.comments.length === 0) && (
+                <p>No comments</p>
+            )}
+
             {(todo.comments) && (todo.comments.length > 0) && (
                 <>
                     <b>Comments:</b>
