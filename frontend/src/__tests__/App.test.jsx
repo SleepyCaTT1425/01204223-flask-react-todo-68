@@ -22,11 +22,20 @@ const originalTodoList = [
 describe('App', () => {
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn());
+
+    // *** เพิ่มการจำลอง Token ลงใน localStorage เพื่อหลบ PrivateRoute ***
+    localStorage.setItem("accessToken", "mock-fake-token");
+    localStorage.setItem("username", "testuser");
+
   });
 
   afterEach(() => {
     vi.resetAllMocks();
     vi.unstubAllGlobals();
+
+    // *** ล้างค่า localStorage หลังจากเทสต์เสร็จเพื่อไม่ให้กระทบเทสต์อื่น ***
+    localStorage.clear();
+
   });
 
   it('renders correctly', async () => {
@@ -60,6 +69,8 @@ describe('App', () => {
     // mock fetch --- สังเกตว่าจะมีการเรียก fetch สองครั้ง จากการ init และจากการกดปุ่ม 
     //   สำหรับการเรียกแต่ละครั้งเราจะสามารถโปรแกรมคำตอบแยกกันได้ โดยเรียก mockImplementationOnce หลายครั้ง
     //   กล่าวคือ รอบแรกคืนรายการทั้งหมด  รอบที่สองคืนค่า todo item ที่แก้ค่าแล้ว
+
+
     global.fetch
       .mockImplementationOnce(() => mockResponse(originalTodoList))    
       .mockImplementationOnce(() => mockResponse(toggledTodoItem1));
@@ -77,6 +88,4 @@ describe('App', () => {
     // ตรวจสอบว่า todo item นั้นเปลี่ยนคลาสเป็น done แล้ว
     expect(await screen.findByText('First todo')).toHaveClass('done');
   });
-
-  
 });
