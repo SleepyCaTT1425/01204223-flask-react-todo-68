@@ -5,7 +5,7 @@ import './App.css'
 import TodoItem from './TodoItem.jsx'
 import { useAuth } from './context/AuthContext.jsx';
 
-function TodoList({apiUrl}) {
+function TodoList({ apiUrl }) {
   // const TODOLIST_API_URL = 'http://localhost:5000/api/todos/';
   const TODOLIST_API_URL = apiUrl;
 
@@ -17,11 +17,11 @@ function TodoList({apiUrl}) {
   // ** อ่านค่าจาก context
   const { username, accessToken, logout } = useAuth();
 
-//   useEffect(() => {
-//     fetchTodoList();
-//   }, []);
+  //   useEffect(() => {
+  //     fetchTodoList();
+  //   }, []);
 
-useEffect(() => {
+  useEffect(() => {
     fetchTodoList();
   }, [username]);                 // *** เพิ่ม username ในรายการ
 
@@ -33,7 +33,7 @@ useEffect(() => {
           'Authorization': `Bearer ${accessToken}`
         }
       });
-      if (!response.ok) { 
+      if (!response.ok) {
         throw new Error('Network error');
       }
       const data = await response.json();
@@ -146,13 +146,13 @@ useEffect(() => {
           //     />
           //     <button onClick={() => {addNewComment(todo.id)}}>Add Comment</button>
 
-              
+
           //   </div>
 
           // </li>
 
-          <TodoItem 
-            key={todo.id} 
+          <TodoItem
+            key={todo.id}
             todo={todo}
             toggleDone={toggleDone}
             deleteTodo={deleteTodo}
@@ -160,20 +160,20 @@ useEffect(() => {
           />
         ))}
       </ul>
-      New: <input type="text" value={newTitle} onChange={(e) => {setNewTitle(e.target.value)}} />
-      <button onClick={() => {addNewTodo()}}>Add</button>
+      New: <input type="text" value={newTitle} onChange={(e) => { setNewTitle(e.target.value) }} />
+      <button onClick={() => { addNewTodo() }}>Add</button>
 
-      <br/>
+      <br />
       <a href="/about">About</a>
 
-        <br/>
+      <br />
       {username && (
-        <a href="#" onClick={(e) => {e.preventDefault(); logout();}}>Logout</a> 
+        <a href="#" onClick={(e) => { e.preventDefault(); logout(); }}>Logout</a>
       )}
 
-      <br/>
+      <br />
       <a href="/login">Login</a>
-      
+
     </>
   )
 }
